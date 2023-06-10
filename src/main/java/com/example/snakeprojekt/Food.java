@@ -7,21 +7,36 @@ import java.util.Random;
 public class Food {
     private int posx;
     private int posy;
-    public static final int radius=25;
-    private Color color;
+    public static final int radius=20;
+    private Color color = Color.BLUE;
     public void setNewFood ()
     {
-
+        Random random = new Random();
+        this.setPosx((random.nextInt(14))*40+20);
+        this.setPosy((random.nextInt(14))*40+20);
+        Color col=new Color(random.nextFloat(),random.nextFloat(),random.nextFloat(),1);
+        this.setColor(Color.BLUE);
     }
 
-    public Food() {
-    }
-
-    public boolean isIntersecting (SnakeSegment snake)
+    public Food()
     {
-        if (this.getPosy()==snake.getPosy() && this.getPosx()== snake.getPosx())
+
+    }
+
+    public Food(int posx, int posy) {
+        this.posx = posx;
+        this.posy = posy;
+    }
+
+    public boolean isIntersecting (Snake snake)
+    {
+        for (SnakeSegment segment: snake.snakeBody)
         {
-            return true;
+            if (this.getPosy()==segment.getPosy() && this.getPosx()== segment.getPosx())
+            {
+                return true;
+            }
+
         }
         return false;
     }

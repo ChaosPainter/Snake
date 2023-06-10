@@ -16,16 +16,15 @@ public class Snake {
         this.dir = dir;
     }
 
-    public void add_Segment()
+    public void add_Segment(int posX,int posY)
     {
-        int posX=snakeBody.get(snakeBody.size()-1).getPosx();
-        int posY=snakeBody.get(snakeBody.size()-1).getPosy();
+
         SnakeSegment segment = new SnakeSegment(posX,posY,Color.GREEN);
         snakeBody.add(segment);
     }
     public void add_Head()
     {
-        SnakeSegment segment = new SnakeSegment(200,200,Color.RED);
+        SnakeSegment segment = new SnakeSegment(20,60,Color.RED);
         snakeBody.add(segment);
     }
 
@@ -36,7 +35,31 @@ public class Snake {
     
     public void moveSnake ()
     {
-    
+
+
+        for (int i = snakeBody.size()-1; i >0 ; i--)
+        {
+            snakeBody.get(i).setPosx(snakeBody.get(i-1).getPosx());
+            snakeBody.get(i).setPosy(snakeBody.get(i-1).getPosy());
+        }
+
+            switch (dir)
+            {
+                case UP -> snakeBody.get(0).moveSegment(0,-40);
+                case DOWN -> snakeBody.get(0).moveSegment(0,40);
+                case RIGHT -> snakeBody.get(0).moveSegment(40,0);
+                case LEFT -> snakeBody.get(0).moveSegment(-40,0);
+            }
     }
+
+    public boolean eatFood (Food food)
+    {
+        if (food.getPosx()==snakeBody.get(0).getPosx() && food.getPosy()==snakeBody.get(0).getPosy())
+        {
+            return true;
+        }
+        return false;
+    }
+
 
 }

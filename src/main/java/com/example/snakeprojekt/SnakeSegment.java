@@ -18,6 +18,21 @@ public class SnakeSegment {
     {
         this.posx+=move_by_X;
         this.posy+=move_by_Y;
+
+        if (this.posx>600)
+        {
+            this.posx-=600;
+        } else if (this.posx<0)
+        {
+            this.posx+=600;
+        }
+        if (this.posy>600)
+        {
+            this.posy-=600;
+        } else if (this.posy<0)
+        {
+            this.posy+=600;
+        }
     }
     public boolean isIntersecting(SnakeSegment seg)
     {
@@ -48,5 +63,13 @@ public class SnakeSegment {
 
     public void setPosy(int posy) {
         this.posy = posy;
+    }
+
+    @Override
+    public String toString() {
+        return "SnakeSegment{" +
+                "posx=" + posx +
+                ", posy=" + posy +
+                '}';
     }
 }
