@@ -30,6 +30,7 @@ public class Controller implements Initializable {
     private GraphicsContext gc;
 
     private int speed=150;
+
     private boolean pause =false;
     private boolean start=false;
 
@@ -73,7 +74,8 @@ public class Controller implements Initializable {
                     food=null;
                     snake.add_Segment(tail_posX, tail_posY);
                     points++;
-                    speed--;
+
+
                 }
 
 
