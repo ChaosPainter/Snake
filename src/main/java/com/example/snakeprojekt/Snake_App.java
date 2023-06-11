@@ -19,7 +19,7 @@ public class Snake_App extends Application {
                                         event.consume(); // this lambda expression stops the timer created in Controller before the application close
                                         c.onClose();     // as to not leave a background task running indefinitely
                                         stage.close();
-                                        }
+                                          }
                                );
         stage.show();
 

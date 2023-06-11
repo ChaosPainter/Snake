@@ -33,7 +33,7 @@ public class Controller implements Initializable {
 
     private int speed=150;
 
-    private boolean pause =false;
+    private boolean pause =true;
     private boolean start=false;
 
     private boolean key_flag=false;
@@ -54,8 +54,7 @@ public class Controller implements Initializable {
 
                 gc.setFill(Color.BLACK);
                 gc.fillRect(0,0,600,600);
-                gc.setStroke(Color.WHITE);
-                gc.strokeText("Points: "+points,10,10);
+
                 //generate food if no food
                 if (food==null) {
                     do {
@@ -119,7 +118,8 @@ public class Controller implements Initializable {
                         }
                     });
                 }
-
+                gc.setStroke(Color.WHITE);
+                gc.strokeText("Points: "+points,10,10);
 
 
 
@@ -155,16 +155,21 @@ public class Controller implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle)
     {
         snake.add_Head();
-        MainCanvas.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
-            @Override
-            public void handle(MouseEvent mouseEvent) {
-                if (!start)
-                {
-                    timer.scheduleAtFixedRate(task_run, 0, speed);
-                    start=true;
-                }
-            }
-        });
+        timer.scheduleAtFixedRate(task_run, 0, speed);
+        gc = MainCanvas.getGraphicsContext2D();
+        gc.setStroke(Color.BLACK);
+        gc.strokeText("Press 'P' to Start or Pause the game.",210,250);
+
+//        MainCanvas.addEventFilter(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+//            @Override
+//            public void handle(MouseEvent mouseEvent) {
+//                if (!start)
+//                {
+//                    timer.scheduleAtFixedRate(task_run, 0, speed);
+//                    start=true;
+//                }
+//            }
+//        });
         MainCanvas.setFocusTraversable(true);
         MainCanvas.addEventFilter(KeyEvent.KEY_RELEASED, new EventHandler<KeyEvent>() {
             @Override
@@ -212,6 +217,7 @@ public class Controller implements Initializable {
 
     public void about ()
     {
+        System.out.println("javafx.runtime.version: " + System.getProperty("javafx.runtime.version"));
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("About");
         alert.setHeaderText("Snake Game");
