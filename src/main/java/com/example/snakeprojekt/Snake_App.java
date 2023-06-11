@@ -12,7 +12,7 @@ public class Snake_App extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(Snake_App.class.getResource("hello-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Hello!");
+        stage.setTitle("Snake!");
         stage.setScene(scene);
         Controller c= fxmlLoader.getController();
         stage.setOnCloseRequest(event->{
