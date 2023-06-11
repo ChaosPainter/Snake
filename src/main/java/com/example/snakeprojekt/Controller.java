@@ -16,6 +16,8 @@ import javafx.scene.paint.Color;
 import javafx.stage.StageStyle;
 
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -49,8 +51,11 @@ public class Controller implements Initializable {
             if (!pause && !game_over) {
                 gc = MainCanvas.getGraphicsContext2D();
                 gc.clearRect(0, 0, MainCanvas.getHeight(), MainCanvas.getWidth());
+
                 gc.setFill(Color.BLACK);
                 gc.fillRect(0,0,600,600);
+                gc.setStroke(Color.WHITE);
+                gc.strokeText("Points: "+points,10,10);
                 //generate food if no food
                 if (food==null) {
                     do {
@@ -195,6 +200,51 @@ public class Controller implements Initializable {
 
     }
 
+    public void restart ()
+    {
+        snake=new Snake();
+        snake.add_Head();
+        points=0;
+        food=null;
+        game_over=false;
+
+    }
+
+    public void about ()
+    {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("About");
+        alert.setHeaderText("Snake Game");
+        alert.setContentText("This is a recreation of a classic Snake game using JavaFX.\n" +
+                            "Author: W.L");
+        alert.showAndWait();
+    }
+
+    public void top_10_scores () throws SQLException {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("TOP Scores");
+        alert.setHeaderText("Top 10 Scores");
+        String sql="Select * From results Order By points DESC;";
+        ResultSet resultSet = DBExecutor.executeSelect(sql);
+        String res="";
+        int i=1;
+        while (resultSet.next() && i<=10)
+        {
+            res+=i;
+            res+=" ";
+            res+=resultSet.getString("name");
+            res+=" ";
+            res+=resultSet.getInt("points");
+            res+=" ";
+            res+=resultSet.getString("date");
+            res+="\n";
+            i++;
+
+        }
+        alert.setContentText(res);
+
+        alert.showAndWait();
+    }
     public void onClose()
     {
         timer.cancel();
